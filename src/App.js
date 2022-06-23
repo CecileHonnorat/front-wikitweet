@@ -15,6 +15,8 @@ export default function App() {
 
   const [searchAuthor, setSearchAuthor] = useState("")
 
+  const [error, setError] = useState("")
+
 console.log(searchAuthor)
   // récupérer les tweets de la bdd au chargement de la page
   useEffect(() => {
@@ -24,6 +26,7 @@ console.log(searchAuthor)
         const rawData = await fetch(`/tweets/${searchAuthor}`);
         const data = await rawData.json();
         setTweets(data.authorTweets)
+        setError(data.error)
         console.log(data)
       }
       loadData()
@@ -33,6 +36,7 @@ console.log(searchAuthor)
         const data = await rawData.json();
         setTweets(data.allTweets)
         console.log(data)
+        setError()
       }
       loadData()
     }
@@ -108,6 +112,7 @@ console.log(searchAuthor)
             onChange={(e) => setTweetContent(e.target.value)} />
         </form>
       </Modal>
+      {error}
       {tweetList}
     </div>
   );
